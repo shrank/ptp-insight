@@ -1,0 +1,35 @@
+[global]
+
+# This value is set to the report_id tag for each measurement sent to inlfuxdb
+reporter_id rpi5
+
+## IP and port information for the influxDB server
+## the default is to use a server running locally
+# influx_server 127.0.0.1
+# influx_port 8428
+
+## influxdb database name to use. The script assumes that the database already exists
+# influx_database ptp4l
+
+## Login information for influxdb. Default is no username or password
+# influx_username USERNAME
+# influx_password PASSWORD
+
+## interface device to use for ptp4l
+# eth_interface eth0
+
+## PTP hardware clock device to use for ptp4l
+# ptp_inerface /dev/ptp0
+
+## Configfile to use for ptp4l
+## if you are using the ptp-insight web frontentd, you can choose the config from the webinterface
+# ptp_config /etc/ptp/ptp.conf
+
+## path to available configs collection that are presented in the webinterface
+# available_configs /etc/ptp/available-configs
+
+## ip to run the webfrontend, use 0.0.0.0 for any
+# webserver_ip 127.0.0.1
+
+## port for the webfrontend
+# webserver_port 5000

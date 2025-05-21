@@ -1,0 +1,7 @@
+Package: ptp-insight
+Section: base
+Priority: optional
+Maintainer: shrank <info@murxs.ch>
+Description: Metrics collection and presentation service built on top of ptp4l
+Multi-Arch: allowed
+Depends: python3, linuxptp, python3-influxdb, python3-uvicorn, python3-httpx, python3-fastapi, python3-scapy

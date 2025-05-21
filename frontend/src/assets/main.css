@@ -1,0 +1,67 @@
+@import 'bootstrap/dist/css/bootstrap.css';
+
+
+/* Full-width content block style */
+.content-block {
+    margin-top: 15px;
+}
+
+/* Make content blocks stand out */
+.content-block h5 {
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 15px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+}
+
+.content-block .collapse {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    border-top: 2px solid #007bff;
+}
+
+/* Make navigation items large and tappable */
+.nav-link {
+    font-size: 1.5rem;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+/* Add a sliding animation to the sidebar (top navigation) */
+#sidebar {
+    height: 100%;
+    position: fixed;
+    left: 0;
+    width: 100%;
+    background-color: #343a40;
+    color: white;
+    transition: top 0.3s ease;
+}
+
+/* Style for the overlay (content area) when sidebar is active */
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+
+/* Responsiveness for mobile */
+@media (max-width: 600px) {
+    .nav-link {
+        font-size: 1.2rem;
+    }
+
+    .content-block h5 {
+        font-size: 1rem;
+        padding: 12px;
+    }
+}

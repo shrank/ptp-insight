@@ -1,0 +1,8 @@
+[Unit]
+Description=PTP Insight Data Collector
+Requires=network.target
+[Service]
+WorkingDirectory=/usr/share/ptp-insight
+ExecStart=python3 main.py /etc/ptp/ptp-insight.conf
+[Install]
+WantedBy=multi-user.target

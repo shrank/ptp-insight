@@ -1,0 +1,8 @@
+[Unit]
+Description=PTP Insight WebUi
+Requires=network.target
+[Service]
+WorkingDirectory=/usr/share/ptp-insight
+ExecStart=python3 webserver.py /etc/ptp/ptp-insight.conf
+[Install]
+WantedBy=multi-user.target
