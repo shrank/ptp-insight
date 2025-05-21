@@ -9,9 +9,11 @@ The metrics collection service uses the ptp4l stdout logs, the pmc client and pa
 Further, he Raspberry PI 5 provides an inexpensive platform to use as sensors or even handheld testing devices. 
 
 Setup Examples:
-![Example Setups](https://github.com/shrank/ptp-insight/blob/main/doc/Setup Examples.png?raw=true)
+
+![Example Setups](https://github.com/shrank/ptp-insight/blob/main/doc/Setup%20Examples.png?raw=true)
 
 Screenshot:
+
 ![WebUI Screenshot](https://github.com/shrank/ptp-insight/blob/main/doc/screenshot1.png?raw=true)
 
 ## hardware
