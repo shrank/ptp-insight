@@ -165,6 +165,10 @@ def main():
                       "delay_deviation": r["delay_deviation"]
                     }
                 })
+          else:
+             # print unkown log messages
+             print(a["line"])
+             
       if(len(new_metrics) > 0):
         try:
           metrics.insert_data(new_metrics)

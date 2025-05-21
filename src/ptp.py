@@ -23,27 +23,28 @@ def parse_ptp_log(line):
     "type": "unknown",
     "raw": msg
   }
-  if(len(parts) > 1):
-    item = parts[1].strip()
-    if(item.startswith("port") and len(parts) >= 3):
-      match = re.search(r'([A-Z0-9]+)\s+to\s+([A-Z0-9]+)\s+', parts[2])
-      if match:
-        res["value"] = match.group(2)
-        res["item"] = item
-        res["type"] = "port_status"
-        return res
+  ## we are not using this
+  # if(len(parts) > 1):
+  #   item = parts[1].strip()
+  #   if(item.startswith("port") and len(parts) >= 3):
+  #     match = re.search(r'([A-Z0-9]+)\s+to\s+([A-Z0-9]+)\s+', parts[2])
+  #     if match:
+  #       res["value"] = match.group(2)
+  #       res["item"] = item
+  #       res["type"] = "port_status"
+  #       return res
+  
+  # match = re.search(r'selected ([a-z]+) clock ([a-z0-9.]+) as best master', msg)
+  # if match:
+  #   res["value"] = match.group(2) + "(" + match.group(1) +")"
+  #   res["type"] = "gm"
+  #   return res
 
-  match = re.search(r'selected ([a-z]+) clock ([a-z0-9.]+) as best master', msg)
-  if match:
-    res["value"] = match.group(2) + "(" + match.group(1) +")"
-    res["type"] = "gm"
-    return res
-
-  match = re.search(r'selected best master clock ([a-z0-9.]+)', msg)
-  if match:
-    res["value"] = match.group(1)
-    res["type"] = "gm"
-    return res
+  # match = re.search(r'selected best master clock ([a-z0-9.]+)', msg)
+  # if match:
+  #   res["value"] = match.group(1)
+  #   res["type"] = "gm"
+  #   return res
 
   match = re.search(r'rms\s+([0-9]+)\s+max\s+([z0-9-]+)\s+freq\s+([z0-9-]+)\s+\+\/-\s+([z0-9-]+)\s+delay\s+([z0-9-]+)\s+\+\/-\s+([z0-9-]+)', msg)
   if match:
