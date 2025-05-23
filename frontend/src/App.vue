@@ -25,7 +25,12 @@
         <RawOutput v-if="page=='raw'" ></RawOutput>
         <LogViewer v-if="page=='log'" ></LogViewer>
         <div v-else>
-          <PtpConfig></PtpConfig>
+          <div class="container-block">
+            <div class="row align-items-center">
+              <PtpConfig></PtpConfig>
+              <ClearData :db_filter="filter"></ClearData>
+            </div>
+          </div>
           <StatusOverview  :config="config" :refresh="cnt" :db_filter="filter"></StatusOverview>
           <GraphComponent title="Incoming Time" metric="time_status_np_ingress_time" :refresh="cnt" :timeframe="timeframe" :db_filter="filter">
           The nanosecond timestamp as received from the master clock. In general, this should continually and liniarely increase over time.
@@ -56,6 +61,7 @@ import StatusOverview from "./components/StatusOverview.vue";
 import RawOutput from "./components/RawOutput.vue";
 import GraphComponent from "./components/GraphComponent.vue";
 import LogViewer from "./components/LogViewer.vue";
+import ClearData from "./components/ClearData.vue";
 
 export default {
   name: 'App',
@@ -64,7 +70,8 @@ export default {
     RawOutput,
     GraphComponent,
     PtpConfig,
-    LogViewer
+    LogViewer,
+    ClearData
   },
   data() {
     return  {

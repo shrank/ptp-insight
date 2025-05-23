@@ -91,6 +91,26 @@ async def forward_query_range(request: Request):
         media_type='application/octet-stream'  # Or infer from headers
     )
 
+
+@app.get("/api/v1/admin/tsdb/delete_series")
+async def forward_delete_series(request: Request):
+    # Get query parameters from the original request
+    query_params = dict(request.query_params)
+
+    async def stream_response():
+        async with client.stream("GET", "http://%s:%d/api/v1/admin/tsdb/delete_series" % (config["influx_server"], config["influx_port"]), params=query_params) as proxied_response:
+            async for chunk in proxied_response.aiter_bytes():
+                yield chunk
+
+    # Make a request inside generator, but call outside
+    # This keeps the connection open while data is streamed
+    return StreamingResponse(
+        stream_response(),
+        status_code=200,  # You could pass real status later
+        media_type='application/octet-stream'  # Or infer from headers
+    )
+
+
 # Get server config 
 @app.get("/api/serverconfig")
 async def get_serverconfig():
