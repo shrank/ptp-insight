@@ -7,6 +7,6 @@
  [ ] filter for database and reporter_id
  [ ] add syslog option
  [ ] add Metric: stepsRemoved
- 
+ [X] fix bug: Frequency Deviation Graph shows wrong values
 
 ## backlog

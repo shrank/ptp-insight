@@ -36,7 +36,7 @@
           <GraphComponent title="Delay" metric="clock_stats_delay" :refresh="cnt" :timeframe="timeframe">
           The delay to the master or peer clock as calculated by the delay mechanism. The path correction delay as reported by transparent clocks(switches) is already accounted for(removed from) this value  
           </GraphComponent>
-          <GraphComponent title="Frequency Deviation" metric="clock_stats_rms" :refresh="cnt" :timeframe="timeframe">
+          <GraphComponent title="Frequency Deviation" metric="clock_stats_freq_deviation" :refresh="cnt" :timeframe="timeframe">
             The deviation in frequency adjustment of the clock in parts per billion(ppb)
           </GraphComponent>
           <GraphComponent title="Network Delay" metric="network_delay" :refresh="cnt" :timeframe="timeframe">
