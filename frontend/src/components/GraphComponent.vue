@@ -3,7 +3,7 @@
       <h5 @click="open=(open===false)">{{title}}</h5>
       <div v-if="open">
         <slot></slot>
-        <TimeSeriesChart :metric="metric" :refresh="refresh" :timeframe="timeframe" style="height: 300px;   margin-bottom: 50px;"></TimeSeriesChart>
+        <TimeSeriesChart :metric="metric" :refresh="refresh" :timeframe="timeframe" :db_filter="db_filter" style="height: 300px;   margin-bottom: 50px;"></TimeSeriesChart>
       </div>
   </div>
 </template>
@@ -24,7 +24,8 @@ export default {
     refresh: Number,
     title: String,
     metric: String,
-    timeframe: Number
+    timeframe: Number,
+    db_filter: String
   },
   data() {
     return {

@@ -35,7 +35,8 @@ export default {
   props: {
     metric: String,
     refresh: Number,
-    timeframe: Number
+    timeframe: Number,
+    db_filter: String
   },
   data(){
     return {
@@ -134,7 +135,7 @@ export default {
       if(step < 1) {
         step = 1
       }
-      let url = `/api/v1/query_range?query=max(${this.metric})&start=-${time}s&step=${step}s`
+      let url = `/api/v1/query_range?query=max(${this.metric}${this.db_filter})&start=-${time}s&step=${step}s`
       axios.get(url)
       .then(response => {
         if(response.data.data.result.length <1) {
