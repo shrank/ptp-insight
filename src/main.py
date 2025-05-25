@@ -109,7 +109,7 @@ def main():
         if(a is None):
           break
         if("pmc" in a):
-            if(a["type"] == "CURRENT_DATA_SET" and "gmIdentity" in a["pmc"]):
+            if(a["type"] == "CURRENT_DATA_SET" and "stepsRemoved" in a["pmc"]):
               new_metrics.append(
                 {
                     "measurement": a["type"].lower(),
@@ -119,8 +119,8 @@ def main():
                     "time": a["ts"].isoformat(),
                     "fields": {
                       "steps_removed": int(a["pmc"]["stepsRemoved"]),
-                      "offset_from_master": int(a["pmc"]["offsetFromMaster"]),
-                      "mean_path:delay": int(a["pmc"]["meanPathDelay"])
+                      "offset_from_master": float(a["pmc"]["offsetFromMaster"]),
+                      "mean_path_delay": float(a["pmc"]["meanPathDelay"])
                     }
                 })
             if(a["type"] == "TIME_STATUS_NP" and "gmIdentity" in a["pmc"]):
