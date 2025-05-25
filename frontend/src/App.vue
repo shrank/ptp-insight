@@ -47,6 +47,9 @@
           <GraphComponent title="Network Delay" metric="network_delay" :refresh="cnt" :timeframe="timeframe" :db_filter="filter">
             Network correction delay as imposed by tranparent bridges(siwtches) on the network. This should be around 1000-2000ns per switch hop
           </GraphComponent>
+          <GraphComponent title="Steps Removed" metric="steps_removed" :refresh="cnt" :timeframe="timeframe">
+            The number of links in the path to the root. Every PTP aware system adds a step.            
+          </GraphComponent>
         </div>
         </div>
     </div>
