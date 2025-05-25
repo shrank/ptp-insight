@@ -1,6 +1,6 @@
 .PHONY: vuejsfrontend static clean dist
 python=python3
-VERSION="0.0.1"
+VERSION="0.0.2"
 BUILD=$(shell date +%Y%m%d%H%M)
 NAME=ptp-insight
 PKG=${NAME}-${VERSION}-${BUILD}

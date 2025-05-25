@@ -78,7 +78,7 @@ def main():
       config["ptp_config"]
     ], queue=log_queue)
 
-    pmc = pmc_runner(["TIME_STATUS_NP"], config["ptp_config"], queue=log_queue)
+    pmc = pmc_runner(["TIME_STATUS_NP", "CURRENT_DATA_SET"], config["ptp_config"], queue=log_queue)
     new_metrics = []
 
 
@@ -109,6 +109,20 @@ def main():
         if(a is None):
           break
         if("pmc" in a):
+            if(a["type"] == "CURRENT_DATA_SET" and "stepsRemoved" in a["pmc"]):
+              new_metrics.append(
+                {
+                    "measurement": a["type"].lower(),
+                    "tags": {
+                      "reporter_id": config["reporter_id"]
+                    },
+                    "time": a["ts"].isoformat(),
+                    "fields": {
+                      "steps_removed": int(a["pmc"]["stepsRemoved"]),
+                      "offset_from_master": float(a["pmc"]["offsetFromMaster"]),
+                      "mean_path_delay": float(a["pmc"]["meanPathDelay"])
+                    }
+                })
             if(a["type"] == "TIME_STATUS_NP" and "gmIdentity" in a["pmc"]):
               new_metrics.append(
                 {
@@ -165,6 +179,10 @@ def main():
                       "delay_deviation": r["delay_deviation"]
                     }
                 })
+          else:
+             # print unkown log messages
+             print(a["line"])
+             
       if(len(new_metrics) > 0):
         try:
           metrics.insert_data(new_metrics)

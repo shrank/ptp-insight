@@ -51,8 +51,8 @@ export default {
   },
   props:{
     config: Object,
-    refresh: Number
-
+    refresh: Number,
+    db_filter: String
   },
   data() {
     return {
@@ -72,7 +72,7 @@ export default {
     refresh_data() {
       //const time = "1h"
       //let url = `/api/v1/query?query=last_over_time(time_status_np_offset[${time}]),last_over_time(time_status_np_ingress_time[${time}]),last_over_time(time_status_np_gm_present[${time}])`
-      let url = `/api/v1/query?query=last_over_time(time_status_np_gm_present[10s])`
+      let url = `/api/v1/query?query=last_over_time(time_status_np_gm_present${this.db_filter}[10s])`
       axios.get(url)
       .then(response => {
         if(response.data.data.result.length > 0) {
@@ -83,7 +83,7 @@ export default {
         this.loading = true
       })
       .catch(response => {console.log(response)})
-      url = `/api/v1/query?query=last_over_time(time_status_np_ingress_time[10s])`
+      url = `/api/v1/query?query=last_over_time(time_status_np_ingress_time${this.db_filter}[10s])`
       axios.get(url)
       .then(response => {
         if(response.data.data.result.length > 0) {
@@ -92,7 +92,7 @@ export default {
         }
       })
       .catch(response => {console.log(response)})
-      url = `/api/v1/query?query=last_over_time(network_delay[10s])`
+      url = `/api/v1/query?query=last_over_time(network_delay${this.db_filter}[10s])`
       axios.get(url)
       .then(response => {
         if(response.data.data.result.length > 0) {

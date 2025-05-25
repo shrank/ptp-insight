@@ -23,24 +23,32 @@
         <div class="col-12 mt-3 p-3" id="main-content">
         
         <RawOutput v-if="page=='raw'" ></RawOutput>
-        <LogViewer v-if="page=='log'" ></LogViewer>
+        <LogViewer v-else-if="page=='log'" ></LogViewer>
         <div v-else>
-          <PtpConfig></PtpConfig>
-          <StatusOverview  :config="config" :refresh="cnt"></StatusOverview>
-          <GraphComponent title="Incoming Time" metric="time_status_np_ingress_time" :refresh="cnt" :timeframe="timeframe">
+          <div class="container-block">
+            <div class="row align-items-center">
+              <PtpConfig></PtpConfig>
+              <ClearData :db_filter="filter"></ClearData>
+            </div>
+          </div>
+          <StatusOverview  :config="config" :refresh="cnt" :db_filter="filter"></StatusOverview>
+          <GraphComponent title="Incoming Time" metric="time_status_np_ingress_time" :refresh="cnt" :timeframe="timeframe" :db_filter="filter">
           The nanosecond timestamp as received from the master clock. In general, this should continually and liniarely increase over time.
           </GraphComponent>
-          <GraphComponent title="RMS" metric="clock_stats_rms" :refresh="cnt" :timeframe="timeframe">
+          <GraphComponent title="RMS" metric="clock_stats_rms" :refresh="cnt" :timeframe="timeframe" :db_filter="filter">
             Root Mean Square of time offset from leader clock in nanoseconds.
           </GraphComponent>
-          <GraphComponent title="Delay" metric="clock_stats_delay" :refresh="cnt" :timeframe="timeframe">
+          <GraphComponent title="Delay" metric="clock_stats_delay" :refresh="cnt" :timeframe="timeframe" :db_filter="filter">
           The delay to the master or peer clock as calculated by the delay mechanism. The path correction delay as reported by transparent clocks(switches) is already accounted for(removed from) this value  
           </GraphComponent>
-          <GraphComponent title="Frequency Deviation" metric="clock_stats_rms" :refresh="cnt" :timeframe="timeframe">
+          <GraphComponent title="Frequency Deviation" metric="clock_stats_freq_deviation" :refresh="cnt" :timeframe="timeframe" :db_filter="filter">
             The deviation in frequency adjustment of the clock in parts per billion(ppb)
           </GraphComponent>
-          <GraphComponent title="Network Delay" metric="network_delay" :refresh="cnt" :timeframe="timeframe">
+          <GraphComponent title="Network Delay" metric="network_delay" :refresh="cnt" :timeframe="timeframe" :db_filter="filter">
             Network correction delay as imposed by tranparent bridges(siwtches) on the network. This should be around 1000-2000ns per switch hop
+          </GraphComponent>
+          <GraphComponent title="Steps Removed" metric="current_data_set_steps_removed" :refresh="cnt" :timeframe="timeframe" :db_filter="filter">
+            The number of links in the path to the root. Every PTP aware system adds a step.            
           </GraphComponent>
         </div>
         </div>
@@ -56,6 +64,7 @@ import StatusOverview from "./components/StatusOverview.vue";
 import RawOutput from "./components/RawOutput.vue";
 import GraphComponent from "./components/GraphComponent.vue";
 import LogViewer from "./components/LogViewer.vue";
+import ClearData from "./components/ClearData.vue";
 
 export default {
   name: 'App',
@@ -64,7 +73,8 @@ export default {
     RawOutput,
     GraphComponent,
     PtpConfig,
-    LogViewer
+    LogViewer,
+    ClearData
   },
   data() {
     return  {
@@ -72,7 +82,8 @@ export default {
       page: "",
       config: {},
       cnt: 0,
-      timeframe: 300
+      timeframe: 300,
+      filter: ""
     }
   },
   mounted(){
@@ -94,6 +105,7 @@ export default {
       axios.get("/api/serverconfig")
       .then(response => {
         this.config = response.data
+        this.filter= `{db="${this.config.influx_database}",reporter_id="${this.config.reporter_id}"}`
       })
     }
   }

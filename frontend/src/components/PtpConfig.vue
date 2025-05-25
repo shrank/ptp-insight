@@ -1,6 +1,4 @@
 <template>
-  <div class="container-block">
-    <div class="row align-items-center">
       <div class="col-auto">
         <label for="configSelect" class="form-label">Select PTP Config:</label>
       </div>
@@ -30,12 +28,11 @@
           Apply
         </button>
       </div>
-    </div>
-
-    <div v-if="message" class="mt-3 alert alert-info">
-      {{ message }}
-    </div>
-  </div>
+      <div class="col-auto">
+        <div v-if="message" class="mt-3 alert alert-info">
+          {{ message }}
+        </div>
+      </div>
 </template>
 
 <script>

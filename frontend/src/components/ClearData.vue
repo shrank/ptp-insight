@@ -1,40 +1,11 @@
 <template>
-  <div class="container-block">
-    <div class="row align-items-center">
-      <div class="col-auto">
-        <label for="configSelect" class="form-label">Select PTP Config:</label>
-      </div>
-      <div class="col-auto">
-        <select
-          id="configSelect"
-          class="form-select"
-          v-model="selectedConfig"
-          :disabled="configs.length === 0"
-        >
-          <option value="" disabled>Select a configuration</option>
-          <option
-            v-for="config in configs"
-            :key="config[1]"
-            :value="config[1]"
-          >
-            {{ config[0] }}
-          </option>
-        </select>
-      </div>
-      <div class="col-auto">
-        <button
-          class="btn btn-primary"
-          @click="applyConfig"
-          :disabled="!selectedConfig"
-        >
-          Apply
-        </button>
-      </div>
-    </div>
-
-    <div v-if="message" class="mt-3 alert alert-info">
-      {{ message }}
-    </div>
+  <div class="col-auto">
+    <button
+      class="btn btn-primary"
+      @click="clear"
+    >
+      Clear All Data
+    </button>
   </div>
 </template>
 
@@ -43,8 +14,11 @@
 import axios from "axios";
 
 export default {
-  name: "PtpConfig",
+  name: "ClearData",
   setup() {
+  },
+  props: {
+    db_filter: String
   },
   data() {
     return {
@@ -53,28 +27,27 @@ export default {
       message: ''
     }
   },
-  mounted(){
-    axios.get('/api/configs')
-    .then(response => {
-      this.configs = response.data.available
-      this.selectedConfig = response.data.current
-      console.log(this.selectedConfig)
-    })
-    .catch (err => {
-      this.message = 'Failed to load configurations.'
-      console.error(err)
-    })
-  },
   methods: {
-    applyConfig() {
-      axios.post('/api/config', { new_config: this.selectedConfig })
-      .then((response)=> {
-        this.message = response.data.message
-      })
-      .catch (err => {
-        this.message = 'Error applying configuration.';
-        console.error(err);
-      })
+    clear() {
+      const r = confirm("delete all ptp-insight data for this reporter_id?")
+      if(r===false) {
+        return
+      }
+      const metrics = [
+        "time_status_np_ingress_time", 
+        "clock_stats_rms", 
+        "clock_stats_delay", 
+        "clock_stats_freq_deviation", 
+        "network_delay",
+        "time_status_np_gm_present", 
+        "time_status_np_ingress_time",
+        "current_data_set_steps_removed",
+        "current_data_set_offset_from_master",
+        "current_data_set_mean_path_delay"
+      ]
+      for (let m of metrics) {
+        axios.get('/api/v1/admin/tsdb/delete_series?match[]=' + m + this.db_filter)
+      }
     }
   }
 }
