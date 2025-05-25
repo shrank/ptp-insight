@@ -13,6 +13,7 @@
         <div><strong>Min:</strong> {{ minValue }}</div>
         <div><strong>Max:</strong> {{ maxValue }}</div>
         <div><strong>Avg:</strong> {{ avgValue }}</div>
+        <div><strong>Spread:</strong> {{ maxValue - minValue }}</div>
       </div>
     </div>
   </div>
