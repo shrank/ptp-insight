@@ -162,10 +162,12 @@ async def get_configs():
 @app.post("/api/config")
 async def post_config(request: Request):
     body = await request.json()
-    if os.path.exists(config["ptp_config"]):
-      if not os.path.islink(config["ptp_config"]):
-          return JSONResponse(content={"message": "Configfile is not a symlink"})
+    if not os.path.islink(config["ptp_config"]):
+        return JSONResponse(content={"message": "Configfile is not a symlink"})
+    try:
       os.remove(config["ptp_config"])  # remove the existing symlink
+    except Exception as e:
+       return JSONResponse(content={"message": "Error" + str(e)})
     new_target = os.path.join(config["available_configs"], body["new_config"])
     if not os.path.isfile(new_target):
       return JSONResponse(content={"message": "Config %s not found" % body["new_config"]})
