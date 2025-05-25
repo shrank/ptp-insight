@@ -23,7 +23,7 @@
         <div class="col-12 mt-3 p-3" id="main-content">
         
         <RawOutput v-if="page=='raw'" ></RawOutput>
-        <LogViewer v-if="page=='log'" ></LogViewer>
+        <LogViewer v-else-if="page=='log'" ></LogViewer>
         <div v-else>
           <div class="container-block">
             <div class="row align-items-center">
@@ -47,7 +47,7 @@
           <GraphComponent title="Network Delay" metric="network_delay" :refresh="cnt" :timeframe="timeframe" :db_filter="filter">
             Network correction delay as imposed by tranparent bridges(siwtches) on the network. This should be around 1000-2000ns per switch hop
           </GraphComponent>
-          <GraphComponent title="Steps Removed" metric="steps_removed" :refresh="cnt" :timeframe="timeframe">
+          <GraphComponent title="Steps Removed" metric="current_data_set_steps_removed" :refresh="cnt" :timeframe="timeframe" :db_filter="filter">
             The number of links in the path to the root. Every PTP aware system adds a step.            
           </GraphComponent>
         </div>
