@@ -33,7 +33,18 @@ export default {
       if(r===false) {
         return
       }
-      const metrics = ["time_status_np_ingress_time", "clock_stats_rms", "clock_stats_delay", "clock_stats_freq_deviation", "network_delay","time_status_np_gm_present", "time_status_np_ingress_time"]
+      const metrics = [
+        "time_status_np_ingress_time", 
+        "clock_stats_rms", 
+        "clock_stats_delay", 
+        "clock_stats_freq_deviation", 
+        "network_delay",
+        "time_status_np_gm_present", 
+        "time_status_np_ingress_time",
+        "current_data_set_steps_removed",
+        "current_data_set_offset_from_master",
+        "current_data_set_mean_path_delay"
+      ]
       for (let m of metrics) {
         axios.get('/api/v1/admin/tsdb/delete_series?match[]=' + m + this.db_filter)
       }
